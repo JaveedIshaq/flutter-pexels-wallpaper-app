@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpaper_app/models/image_model.dart';
+import 'package:flutter_wallpaper_app/single_photo.dart';
 import 'package:http/http.dart' as http;
 
 class PhotosHome extends StatefulWidget {
@@ -51,13 +52,21 @@ class _PhotosHomeState extends State<PhotosHome> {
             return StaggeredGridView.countBuilder(
               crossAxisCount: 4,
               itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) => Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                      '${snapshot.data[index].src.tiny}',
+              itemBuilder: (BuildContext context, int index) => InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return SinglePhoto(photo: snapshot.data[index]);
+                  }),
+                ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        '${snapshot.data[index].src.tiny}',
+                      ),
                     ),
                   ),
                 ),
